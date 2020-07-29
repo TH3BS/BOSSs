@@ -1948,21 +1948,21 @@ elseif redis:sismember(boss..':SUDO_BOT:',UserID) then
 return sendMsg(ChatID,MsgID,"👤*¦* لا يمكنك حظر المطور\n🛠") 
 end
 if GeneralBanned(UserID) then 
-return sendMsg(ChatID,MsgID,"📮¦ المستخدم  ⋙「 "..NameUser.." 」 \n⛔️¦ تم بالتأكيد حظره عام  من المجموعه \n✓") 
+return sendMsg(ChatID,MsgID,"📮¦ المستخدم  ⋙「 "..NameUser.." 」 \n⛔️¦ تم بالتأكيد حظره العام  من المجموعات \n✓") 
 end
 redis:hset(boss..'username:'..UserID, 'username', Resolv)
 redis:sadd(boss..'gban_users',UserID)
 kick_user(UserID,ChatID) 
-return sendMsg(ChatID,MsgID,"📮¦ المستخدم  ⋙「 "..NameUser.." 」 \n⛔️¦ تم حظره عام  من المجموعه \n✓") 
+return sendMsg(ChatID,MsgID,"📮¦ المستخدم  ⋙「 "..NameUser.." 」 \n⛔️¦ تم حظره العام  من المجموعات \n✓") 
 end
 
 if cmd == "unbandall" then  
 if not GeneralBanned(UserID) then
-return sendMsg(ChatID,MsgID,"📮¦ المستخدم  ⋙「 "..NameUser.." 」 \n⛔️¦ تم بالتأكيد الغاء حظره عام  من المجموعه \n✓") 
+return sendMsg(ChatID,MsgID,"📮¦ المستخدم  ⋙「 "..NameUser.." 」 \n⛔️¦ تم بالتأكيد الغاء حظره العام  من المجموعات \n✓") 
 end
 redis:srem(boss..'gban_users',UserID)
 StatusLeft(ChatID,UserID)
-return sendMsg(ChatID,MsgID,"📮¦ المستخدم  ⋙「 "..NameUser.." 」 \n⛔️¦ تم الغاء حظره عام  من المجموعه \n✓") 
+return sendMsg(ChatID,MsgID,"📮¦ المستخدم  ⋙「 "..NameUser.." 」 \n⛔️¦ تم الغاء حظره العام  من المجموعات \n✓") 
 end
 
 if cmd == "tfa3l" then  
