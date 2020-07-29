@@ -28,7 +28,7 @@ if not Er_utf8 then
 print("('\n\27[1;31m￤Pkg >> UTF_8 is Not installed.'\n\27[0m￤")
 os.exit()
 end
-
+ 
 
 
 function create_config(Token)
@@ -66,9 +66,8 @@ user = {}
 user.username = SUDO_USER
 user.Source  = DirFol
 local url , res = https.request('https://api.th3boss.com/GetID/?Array='..JSON.encode(user))
-print('https://api.th3boss.com/GetID/?Array='..JSON.encode(user))
-if res ~= 200 then
 print(res)
+if res ~= 200 then
 print('\n\27[1;31m￤ Conect is Failed !\n￤ حدث خطـآ في آلآتصـآل بآلسـيرفر , يرجى مـرآسـلهہ‏‏ مـطـور آلسـورس ليتمـگن مـن حل آلمـشـگلهہ‏‏ في آسـرع وقت مـمـگن . !')
 os.exit()
 end
@@ -130,12 +129,12 @@ print('\27[0;33m>>'..[[
 
 
 ▀█████████▄   ▄██████▄     ▄████████    ▄████████
-███    ███ ███    ███   ███    ███   ███    ███
-███    ███ ███    ███   ███    █▀    ███    █▀
-▄███▄▄▄██▀  ███    ███   ███          ███
+  ███    ███ ███    ███   ███    ███   ███    ███
+  ███    ███ ███    ███   ███    █▀    ███    █▀
+ ▄███▄▄▄██▀  ███    ███   ███          ███
 ▀▀███▀▀▀██▄  ███    ███ ▀███████████ ▀███████████ ¦ Dev : @TH3BS
-███    ██▄ ███    ███          ███          ███ ¦ Dev : @OMMMM
-███    ███ ███    ███    ▄█    ███    ▄█    ███
+  ███    ██▄ ███    ███          ███          ███ ¦ Dev : @OMMMM
+  ███    ███ ███    ███    ▄█    ███    ▄█    ███
 ▄█████████▀   ▀██████▀   ▄████████▀   ▄████████▀  ¦ Source The3Boss
 ---------------------------------------------------------------------
 ]]..'\027[0;32m')
@@ -175,16 +174,16 @@ print('\27[0;33m>>'..[[
 
 
 ▀█████████▄   ▄██████▄     ▄████████    ▄████████ 
-███    ███ ███    ███   ███    ███   ███    ███ 
-███    ███ ███    ███   ███    █▀    ███    █▀  
-▄███▄▄▄██▀  ███    ███   ███          ███        
+  ███    ███ ███    ███   ███    ███   ███    ███ 
+  ███    ███ ███    ███   ███    █▀    ███    █▀  
+ ▄███▄▄▄██▀  ███    ███   ███          ███        
 ▀▀███▀▀▀██▄  ███    ███ ▀███████████ ▀███████████ ¦ Dev : @TH3BS
-███    ██▄ ███    ███          ███          ███ ¦ Dev : @OMMMM
-███    ███ ███    ███    ▄█    ███    ▄█    ███ 
+  ███    ██▄ ███    ███          ███          ███ ¦ Dev : @OMMMM
+  ███    ███ ███    ███    ▄█    ███    ▄█    ███ 
 ▄█████████▀   ▀██████▀   ▄████████▀   ▄████████▀  ¦ VERSION » v]]..version..[[
 
 -------------------------------------------------------------------
-								
+                                                  
 ]]..'\027[0;32m'
 ..'¦ TOKEN_BOT: \27[1;34m'..Token..'\027[0;32m\n'
 ..'¦ BOT__INFO: \27[1;34m'.. Bot_User..'\27[0;36m » ('..boss..')\027[0;32m\n'
@@ -238,12 +237,6 @@ end
 if msg.text and msg.sender_user_id_ == our_id then
 return false
 end
-
-if msg.edited and not msg.Director  then 
---Del_msg(msg.chat_id_,msg.id_)
---return false
-end
-
 if msg.reply_to_message_id_ ~= 0 then msg.reply_id = msg.reply_to_message_id_ end
 msg.type = GetType(msg.chat_id_)
 if msg.type == "pv" and redis:get(boss..':mute_pv:'..msg.chat_id_) then
@@ -301,7 +294,7 @@ else
 msg.TheRank = 'فقط عضو 🙍🏼‍♂️'
 msg.Rank = 10 
 end
-
+ 
 if msg.Rank == 1 then
 msg.SudoBase = true
 end
@@ -423,22 +416,22 @@ Del_msg(msg.chat_id_,msg.id_)
 return false 
 end
 if msg.content_.ID == "MessageText" then
-Type_id = msg.content_.text_
-elseif msg.content_.ID == 'MessagePhoto' then
-if msg.content_.photo_.sizes_[3] then Type_id = msg.content_.photo_.sizes_[3].photo_.persistent_id_ else Type_id = msg.content_.photo_.sizes_[0].photo_.persistent_id_ end
-elseif msg.content_.ID == "MessageSticker" then
-Type_id = msg.content_.sticker_.sticker_.persistent_id_
-elseif msg.content_.ID == "MessageVoice" then
-Type_id = msg.content_.voice_.voice_.persistent_id_
-elseif msg.content_.ID == "MessageAnimation" then
-Type_id = msg.content_.animation_.animation_.persistent_id_
-elseif msg.content_.ID == "MessageVideo" then
-Type_id = msg.content_.video_.video_.persistent_id_
-elseif msg.content_.ID == "MessageAudio" then
-Type_id = msg.content_.audio_.audio_.persistent_id_
-else
-Type_id = 0
-end
+	Type_id = msg.content_.text_
+  elseif msg.content_.ID == 'MessagePhoto' then
+  if msg.content_.photo_.sizes_[3] then Type_id = msg.content_.photo_.sizes_[3].photo_.persistent_id_ else Type_id = msg.content_.photo_.sizes_[0].photo_.persistent_id_ end
+  elseif msg.content_.ID == "MessageSticker" then
+	Type_id = msg.content_.sticker_.sticker_.persistent_id_
+  elseif msg.content_.ID == "MessageVoice" then
+	Type_id = msg.content_.voice_.voice_.persistent_id_
+  elseif msg.content_.ID == "MessageAnimation" then
+	Type_id = msg.content_.animation_.animation_.persistent_id_
+  elseif msg.content_.ID == "MessageVideo" then
+	Type_id = msg.content_.video_.video_.persistent_id_
+  elseif msg.content_.ID == "MessageAudio" then
+	Type_id = msg.content_.audio_.audio_.persistent_id_
+  else
+	Type_id = 0
+  end
 
 if FilterX(msg,Type_id) then --[[ الكلمات الممنوعه ]]
 return false
@@ -462,6 +455,7 @@ if amrr[1] == Amor then
 amrnew = Amor ; amrold = ik   
 end end end
 Text = Text:gsub(amrnew,amrold)
+AF = CheckBotA(msg) if AF then return sendMsg(msg.chat_id_,msg.id_,AF) end 
 GetMsg = ScriptFile.iBoss(msg,{Text:match(Text2)})
 if GetMsg then
 print("\27[1;35m¦This_Msg : "..Text2.."  | Plugin is: \27[1;32mScript.lua\27[0m")
@@ -477,6 +471,7 @@ Text = Text:gsub("ی","ي")
 Text = Text:gsub("ک","ك")
 Text = Text:gsub("ه‍","ه")
 if Text:match(Boss) then -- Check Commands To admin
+AF = CheckBotA(msg) if AF then return sendMsg(msg.chat_id_,msg.id_,AF) end 
 GetMsg = ScriptFile.iBoss(msg,{Text:match(Boss)})
 if GetMsg then
 print("\27[1;35m¦This_Msg : ",Boss.." | Plugin is: \27[1;32mScript.lua\27[0m")
@@ -522,11 +517,11 @@ end
 end
 
 function tdcli_update_callback(data)
-local msg = data.message_
-if data.ID == "UpdateMessageSendFailed" then 
-if msg and msg.sender_user_id_ then
-redis:srem(boss..'users',msg.sender_user_id_)
-end
+	local msg = data.message_
+	if data.ID == "UpdateMessageSendFailed" then 
+	if msg and msg.sender_user_id_ then
+	redis:srem(boss..'users',msg.sender_user_id_)
+	end
 elseif data.ID == "UpdateNewCallbackQuery" then
 local datab = data.payload_.data_ 
 local UserID = data.sender_user_id_
@@ -538,19 +533,19 @@ local UserJoin = tonumber(UserJoin)
 if Text == "CheckRobotJoin:" then
 local Adminn = false
 if UserID == SUDO_ID then 
-Adminn = true
+	Adminn = true
 elseif redis:sismember(boss..':SUDO_BOT:',UserID) then 
-Adminn = true
+	Adminn = true
 elseif redis:sismember(boss..':MONSHA_BOT:'..ChatID,UserID) then 
-Adminn = true
+	Adminn = true
 elseif redis:sismember(boss..':MONSHA_Group:'..ChatID,UserID) then 
-Adminn = true
+	Adminn = true
 elseif redis:sismember(boss..'owners:'..ChatID,UserID) then 
-Adminn = true
+	Adminn = true
 elseif redis:sismember(boss..'admins:'..ChatID,UserID) then 
-Adminn = true
+	Adminn = true
 elseif UserID == UserJoin then 
-Adminn = true
+	Adminn = true
 end	
 if Adminn then
 Restrict(ChatID,UserJoin,2)
@@ -574,134 +569,141 @@ tdcli_function ({ID = "PinChannelMessage",channel_id_ = msg.chat_id_:gsub('-100'
 end
 
 end
-if Refresh_Start then
-Refresh_Start = false
-Start_Bot()
-return false
-end
-if UpdateSourceStart then
-UpdateSourceStart = false
---UpdateSource(msg,true)
-end
-elseif data.ID == "UpdateNewMessage" then
-if msg.content_.ID == "MessageText" then
-if msg.content_.entities_ and msg.content_.entities_[0] and msg.content_.entities_[0].ID then
-if msg.content_.entities_[0].ID == "MessageEntityTextUrl" then
-msg.textEntityTypeTextUrl = true
-print("MessageEntityTextUrl")
-elseif msg.content_.entities_[0].ID == "MessageEntityBold" then 
-msg.textEntityTypeBold = true
-elseif msg.content_.entities_[0].ID == "MessageEntityItalic" then
-msg.textEntityTypeItalic = true
-print("MessageEntityItalic")
-elseif msg.content_.entities_[0].ID == "MessageEntityCode" then
-msg.textEntityTypeCode = true
-print("MessageEntityCode")
-end
-end
-msg.text = msg.content_.text_
-if (msg.text=="تحديث" or msg.text=="we" or msg.text=="تحديث ♻️") and msg.sender_user_id_ == SUDO_ID then
-return sendMsg(msg.chat_id_,msg.id_," 🗂¦ تہ‏‏م تحديث آلمـلفآت \n✓",function(arg,data)
-Refresh_Start = true
-end)
-end 
+	if Refresh_Start then
+	Refresh_Start = false
+	Start_Bot()
+	return false
+	end
+	if UpdateSourceStart then
+	UpdateSourceStart = false
+	UpdateSource(msg,true)
+	end
+	elseif data.ID == "UpdateNewMessage" then
+	if msg.content_.ID == "MessageText" then
+	if msg.content_.entities_ and msg.content_.entities_[0] and msg.content_.entities_[0].ID then
+	if msg.content_.entities_[0].ID == "MessageEntityTextUrl" then
+	msg.textEntityTypeTextUrl = true
+	print("MessageEntityTextUrl")
+	elseif msg.content_.entities_[0].ID == "MessageEntityBold" then 
+	msg.textEntityTypeBold = true
+	elseif msg.content_.entities_[0].ID == "MessageEntityItalic" then
+	msg.textEntityTypeItalic = true
+	print("MessageEntityItalic")
+	elseif msg.content_.entities_[0].ID == "MessageEntityCode" then
+	msg.textEntityTypeCode = true
+	print("MessageEntityCode")
+	end
+	end
+	msg.text = msg.content_.text_
+	if (msg.text=="تحديث" or msg.text=="we" or msg.text=="تحديث ♻️") and msg.sender_user_id_ == SUDO_ID then
+	return sendMsg(msg.chat_id_,msg.id_," 🗂¦ تہ‏‏م تحديث آلمـلفآت \n✓",function(arg,data)
+	Refresh_Start = true
+	end)
+	end 
+	if msg.text == 'Update Source' and msg.sender_user_id_ == SUDO_ID then
+	UpdateSource(msg)
+	sendMsg(msg.chat_id_,msg.id_,'👷🏽| {* تــم تحديث وتثبيت السورس  *} 📡.\n\n👨🏼‍💼| { Bot is Update » }👍🏿',function(arg,data)
+	dofile("./inc/Run.lua")
+	print("Reload ~ ./inc/Run.lua")
+	end) 
+	end
+	if (msg.text == 'reload' or msg.text == "أعادة التشغيل 🔌") and msg.sender_user_id_ == SUDO_ID then
+	sendMsg(msg.chat_id_,msg.id_,'👷🏽| {* تــم أعـاده تشغيل البوت  *} 📡.\n\n👨🏼‍💼| { Bot is Reloaded » }👍🏿',function(arg,data)
+	dofile("./inc/Run.lua")
+	print("Reload ~ ./inc/Run.lua")
+	end)
+	return false
+	end
+	end 
+	input_inFo(msg)
+	
+	elseif data.ID == "UpdateNewChat" then  
+	if redis:get(boss..'group:add'..data.chat_.id_) then
+	redis:set(boss..'group:name'..data.chat_.id_,data.chat_.title_)
+	end
+	elseif data.ID == "UpdateChannel" then  
+	if data.channel_.status_.ID == "ChatMemberStatusKicked" then 
+	if redis:get(boss..'group:add-100'..data.channel_.id_) then
+	local linkGroup = (redis:get(boss..'linkGroup-100'..data.channel_.id_) or "")
+	local NameGroup = (redis:get(boss..'group:name-100'..data.channel_.id_) or "")
+	send_msg(SUDO_ID,"📛| قام شخص بطرد البوت من المجموعه الاتيه : \n🏷| ألايدي : `-100"..data.channel_.id_.."`\n🗯| الـمجموعه : "..Flter_Markdown(NameGroup).."\n\n📮| تـم مسح كل بيانات المجموعه بنـجاح ")
+	rem_data_group('-100'..data.channel_.id_)
+	end
+	end
+	elseif data.ID == "UpdateFile" then 
+	if Uploaded_Groups_Ok then
+	Uploaded_Groups_Ok = false
+	local GetInfo = io.open(data.file_.path_, "r"):read('*a')
+	local All_Groups = JSON.decode(GetInfo)
+	for k,IDS in pairs(All_Groups.Groups) do
+	redis:mset(
+	boss..'group:name'..k,IDS.Title,
+	boss..'num_msg_max'..k,5,
+	boss..'group:add'..k,true,
+	boss..'lock_link'..k,true,
+	boss..'lock_spam'..k,true,
+	boss..'lock_webpage'..k,true,
+	boss..'lock_markdown'..k,true,
+	boss..'lock_flood'..k,true,
+	boss..'lock_bots'..k,true,
+	boss..'mute_forward'..k,true,
+	boss..'mute_contact'..k,true,
+	boss..'mute_document'..k,true,
+	boss..'mute_inline'..k,true,
+	boss..'lock_username'..k,true,
+	boss..'replay'..k,true
+	)
+	redis:sadd(boss..'group:ids',k) 
 
-if (msg.text == 'reload' or msg.text == "أعادة التشغيل 🔌") and msg.sender_user_id_ == SUDO_ID then
-sendMsg(msg.chat_id_,msg.id_,'👷🏽| {* تــم أعـاده تشغيل البوت  *} 📡.\n\n👨🏼‍💼| { Bot is Reloaded » }👍🏿',function(arg,data)
-dofile("./inc/Run.lua")
-print("Reload ~ ./inc/Run.lua")
-end)
-return false
-end
-end 
-input_inFo(msg)
-
-elseif data.ID == "UpdateNewChat" then  
-if redis:get(boss..'group:add'..data.chat_.id_) then
-redis:set(boss..'group:name'..data.chat_.id_,data.chat_.title_)
-end
-elseif data.ID == "UpdateChannel" then  
-if data.channel_.status_.ID == "ChatMemberStatusKicked" then 
-if redis:get(boss..'group:add-100'..data.channel_.id_) then
-local linkGroup = (redis:get(boss..'linkGroup-100'..data.channel_.id_) or "")
-local NameGroup = (redis:get(boss..'group:name-100'..data.channel_.id_) or "")
-send_msg(SUDO_ID,"📛| قام شخص بطرد البوت من المجموعه الاتيه : \n🏷| ألايدي : `-100"..data.channel_.id_.."`\n🗯| الـمجموعه : "..Flter_Markdown(NameGroup).."\n\n📮| تـم مسح كل بيانات المجموعه بنـجاح ")
-rem_data_group('-100'..data.channel_.id_)
-end
-end
-elseif data.ID == "UpdateFile" then 
-if Uploaded_Groups_Ok then
-Uploaded_Groups_Ok = false
-local GetInfo = io.open(data.file_.path_, "r"):read('*a')
-local All_Groups = JSON.decode(GetInfo)
-for k,IDS in pairs(All_Groups.Groups) do
-redis:mset(
-boss..'group:name'..k,IDS.Title,
-boss..'num_msg_max'..k,5,
-boss..'group:add'..k,true,
-boss..'lock_link'..k,true,
-boss..'lock_spam'..k,true,
-boss..'lock_webpage'..k,true,
-boss..'lock_markdown'..k,true,
-boss..'lock_flood'..k,true,
-boss..'lock_bots'..k,true,
-boss..'mute_forward'..k,true,
-boss..'mute_contact'..k,true,
-boss..'mute_document'..k,true,
-boss..'mute_inline'..k,true,
-boss..'lock_username'..k,true,
-boss..'replay'..k,true
-)
-redis:sadd(boss..'group:ids',k) 
-
-if IDS.Admins then
-for user,ID in pairs(IDS.Admins) do
-redis:hset(boss..'username:'..ID,'username',user)
-redis:sadd(boss..'admins:'..k,ID)
-end
-end
-if IDS.Creator then
-for user,ID in pairs(IDS.Creator) do
-redis:hset(boss..'username:'..ID,'username',user)
-redis:sadd(boss..':MONSHA_BOT:'..k,ID)
-end
-end
-if IDS.Owner then
-for user,ID in pairs(IDS.Owner) do
-redis:hset(boss..'username:'..ID,'username',user)
-redis:sadd(boss..'owners:'..k,ID)
-end
-end
-end
-io.popen("rm -fr ../.telegram-cli/data/document/*")
-sendMsg(Uploaded_Groups_CH,Uploaded_Groups_MS,'📦*¦* تم رفع آلنسـخهہ‏‏ آلآحتيآطـيهہ\n⚖️*¦* حآليآ عدد مـجمـوعآتگ هہ‏‏يهہ‏‏ *'..redis:scard(boss..'group:ids')..'* 🌿\n✓')
-end
-elseif data.ID == "UpdateUser" then  
-if data.user_.type_.ID == "UserTypeDeleted" then
-print("¦ userTypeDeleted")
-redis:srem(boss..'users',data.user_.id_)
-elseif data.user_.type_.ID == "UserTypeGeneral" then
-local CheckUser = redis:hgetall(boss..'username:'..data.user_.id_).username
-if data.user_.username_  then 
-USERNAME = '@'..data.user_.username_
-else
-USERNAME = data.user_.first_name_..' '..(data.user_.last_name_ or "" )
-end	
-if CheckUser and CheckUser ~= USERNAME  then
-print("¦ Enter Update User ")
-redis:hset(boss..'username:'..data.user_.id_,'username',USERNAME)
-end 
-end
-elseif data.ID == "UpdateMessageEdited" then
-GetMsgInfo(data.chat_id_,data.message_id_,function(arg,data)
-msg = data
-msg.edited = true
-msg.text = data.content_.text_
-input_inFo(msg)  
-end,nil)
-elseif data.ID == "UpdateOption" and data.value_.value_ == "Ready" then
-tdcli_function({ID='GetChat',chat_id_ = SUDO_ID},function(arg,data)end,nil)
-end
-
-
+	if IDS.Admins then
+	for user,ID in pairs(IDS.Admins) do
+	redis:hset(boss..'username:'..ID,'username',user)
+	redis:sadd(boss..'admins:'..k,ID)
+	end
+	end
+	if IDS.Creator then
+	for user,ID in pairs(IDS.Creator) do
+	redis:hset(boss..'username:'..ID,'username',user)
+	redis:sadd(boss..':MONSHA_BOT:'..k,ID)
+	end
+	end
+	if IDS.Owner then
+	for user,ID in pairs(IDS.Owner) do
+	redis:hset(boss..'username:'..ID,'username',user)
+	redis:sadd(boss..'owners:'..k,ID)
+	end
+	end
+	end
+	io.popen("rm -fr ../.telegram-cli/data/document/*")
+	sendMsg(Uploaded_Groups_CH,Uploaded_Groups_MS,'📦*¦* تم رفع آلنسـخهہ‏‏ آلآحتيآطـيهہ\n⚖️*¦* حآليآ عدد مـجمـوعآتگ هہ‏‏يهہ‏‏ *'..redis:scard(boss..'group:ids')..'* 🌿\n✓')
+	end
+	elseif data.ID == "UpdateUser" then  
+	if data.user_.type_.ID == "UserTypeDeleted" then
+	print("¦ userTypeDeleted")
+	redis:srem(boss..'users',data.user_.id_)
+	elseif data.user_.type_.ID == "UserTypeGeneral" then
+	local CheckUser = redis:hgetall(boss..'username:'..data.user_.id_).username
+	if data.user_.username_  then 
+	USERNAME = '@'..data.user_.username_
+	else
+	USERNAME = data.user_.first_name_..' '..(data.user_.last_name_ or "" )
+	end	
+	if CheckUser and CheckUser ~= USERNAME  then
+	print("¦ Enter Update User ")
+	redis:hset(boss..'username:'..data.user_.id_,'username',USERNAME)
+	end 
+	end
+	elseif data.ID == "UpdateMessageEdited" then
+	GetMsgInfo(data.chat_id_,data.message_id_,function(arg,data)
+	msg = data
+	msg.edited = true
+	msg.text = data.content_.text_
+	input_inFo(msg)  
+	end,nil)
+	elseif data.ID == "UpdateOption" and data.value_.value_ == "Ready" then
+	UpdateSource() dofile("./inc/Run.lua")
+	tdcli_function({ID='GetChat',chat_id_ = SUDO_ID},function(arg,data)end,nil)
+	end
+	
+	
 end
