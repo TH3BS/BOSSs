@@ -20,11 +20,12 @@ or redis:get(boss..":Witting_changeamr2:"..msg.chat_id_..msg.sender_user_id_)
 or redis:get(boss..":Witting_AmrDel:"..msg.chat_id_..msg.sender_user_id_) 
 or redis:get(boss..":firstAmrOld:"..msg.chat_id_..msg.sender_user_id_)) and MsgText[1] ~= "الغاء" then 
 return false end 
+print(MsgText[1] )
+print(MsgText[2] )
 
 if msg.type ~= 'pv' then if MsgText[1] == "تفعيل" and not MsgText[2] then
 return modadd(msg)  
 end
-
 
 if MsgText[1] == "تعطيل" and not MsgText[2] then
 if not msg.SudoUser then return '🛠*¦* أنـت لـسـت الـمـطـور ⚙️'end
@@ -215,6 +216,7 @@ NameUser = Hyper_Link_Name(data)
 sendMsg(arg.ChatID,arg.MsgID,"📮¦ المستخدم  ⋙「 "..NameUser.." 」 \n⛔️¦ تم تقييده  من المجموعه \n✓") 
 end,{ChatID=arg.ChatID,UserID=arg.UserID,MsgID=arg.MsgID})
 Restrict(arg.ChatID,arg.UserID,1)
+redis:set(boss..":TqeedUser:"..arg.ChatID..arg.UserID,true)
 elseif data.status_.ID == "ChatMemberStatusLeft" then
 sendMsg(arg.ChatID,arg.MsgID,"👤*¦* لا يمكنني تقيد العضو لانه مغادر المجموعة \n🛠") 
 else
@@ -251,7 +253,8 @@ if data.status_.ID == "ChatMemberStatusEditor" then
 GetChatMember(arg.ChatID,arg.UserID,function(arg,data)
 if data.status_.ID == "ChatMemberStatusMember" then 
 Restrict(arg.ChatID,arg.UserID,1)  
-sendMsg(arg.ChatID,arg.MsgID,"📮¦ المستخدم  ⋙「 "..NameUser.." 」 \n⛔️¦ تم تقييده  من المجموعه \n✓") 
+sredis:set(boss..":TqeedUser:"..arg.ChatID..arg.UserID,true)
+endMsg(arg.ChatID,arg.MsgID,"📮¦ المستخدم  ⋙「 "..NameUser.." 」 \n⛔️¦ تم تقييده  من المجموعه \n✓") 
 else
 sendMsg(arg.ChatID,arg.MsgID,'📛*¦* لا يمكنني تقييد العضو .\n🎟* لانه مشرف في المجموعه \n ❕')    
 end
@@ -296,6 +299,7 @@ if data.status_.ID ~= "ChatMemberStatusEditor" then
 return sendMsg(arg.ChatID,arg.MsgID,'📛*¦* لا يمكنني تقييد العضو .\n🎟* لانني لست مشرف في المجموعه \n ❕')    
 end
 Restrict(arg.ChatID,arg.UserID,1)
+sredis:set(boss..":TqeedUser:"..arg.ChatID..arg.UserID,true)
 sendMsg(arg.ChatID,arg.MsgID,"📮¦ المستخدم  ⋙「 "..NameUser.." 」 \n⛔️¦ تم تقييده  من المجموعه \n✓") 
 end,{ChatID=arg.ChatID,MsgID=arg.MsgID,UserName=UserName,UserID=data.id_})
 end,{ChatID=msg.chat_id_,MsgID=msg.id_})
@@ -311,6 +315,7 @@ if not data.sender_user_id_ then return sendMsg(arg.ChatID,arg.MsgID,"📛*¦* �
 local UserID = data.sender_user_id_
 if UserID == our_id then return sendMsg(arg.ChatID,arg.MsgID,"👤*¦* لا يمكنك تنفيذ الامر بالرد ع رسالة البوت \n📛") end
 Restrict(arg.ChatID,UserID,2)
+redis:del(boss..":TqeedUser:"..arg.ChatID..UserID)
 GetUserID(UserID,function(arg,data)
 NameUser = Hyper_Link_Name(data)
 sendMsg(arg.ChatID,arg.MsgID,"📮¦ المستخدم  ⋙「 "..NameUser.." 」 \n⛔️¦ تم فك تقييده  من المجموعه \n✓") 
@@ -329,6 +334,7 @@ if data.status_.ID ~= "ChatMemberStatusEditor" then
 return sendMsg(arg.ChatID,arg.MsgID,'📛*¦* لا يمكنني تقييد العضو .\n🎟* لانني لست مشرف في المجموعه \n ❕')    
 end
 Restrict(arg.ChatID,arg.UserID,2)  
+redis:del(boss..":TqeedUser:"..arg.ChatID..arg.UserID)
 sendMsg(arg.ChatID,arg.MsgID,"📮¦ المستخدم  ⋙「 "..NameUser.." 」 \n⛔️¦ تم فك تقييده  من المجموعه \n✓") 
 end,{ChatID=arg.ChatID,MsgID=arg.MsgID,UserID=UserID,NameUser=NameUser})
 end,{ChatID=msg.chat_id_,MsgID=msg.id_})
@@ -344,6 +350,7 @@ GetChatMember(arg.ChatID,our_id,function(arg,data)
 if data.status_.ID ~= "ChatMemberStatusEditor" then 
 return sendMsg(arg.ChatID,arg.MsgID,'📛*¦* لا يمكنني قك تقييد العضو .\n🎟* لانني لست مشرف في المجموعه \n ❕')    
 end
+redis:del(boss..":TqeedUser:"..arg.ChatID..arg.UserID)
 Restrict(arg.ChatID,arg.UserID,2)
 sendMsg(arg.ChatID,arg.MsgID,"📮¦ المستخدم  ⋙「 "..NameUser.." 」 \n⛔️¦ تم فك تقييده  من المجموعه \n✓") 
 end,{ChatID=arg.ChatID,MsgID=arg.MsgID,UserID=data.id_,NameUser=NameUser})
@@ -2717,10 +2724,12 @@ if not msg.SudoBase then return "📛*¦* هذا الامر يخص {المطور
 return chat_list(msg) 
 end
 
-if MsgText[1] == 'تعطيل' and MsgText[2] and MsgText[2]:match("-100(%d+)") then
+
+if MsgText[1] == 'تعطيل' and MsgText[2] and MsgText[2]:match("(%d+)") then
 if not msg.SudoUser then return "📛*¦* هذا الامر يخص {المطور} فقط  \n🚶" end
-local name_gp = redis:get(boss..'group:name'..MsgText[2])
-GroupTitle(MsgText[2],function(arg,data)
+local idgrup = "-100"..MsgText[2]
+local name_gp = redis:get(boss..'group:name'..idgrup)
+GroupTitle(idgrup,function(arg,data)
 if data.ID and data.ID == "Error" and data.message_ == "CHANNEL_INVALID" then
 if redis:sismember(boss..'group:ids',arg.Group) then
 rem_data_group(arg.Group)
@@ -2738,7 +2747,7 @@ else
 sendMsg(arg.chat_id_,arg.id_,'📛*¦* البوت ليس مفعل بالمجموعة \n🎫*¦* ولكن تم مغادرتها\n🏷*¦* المجموعةة » ['..arg.name_gp..']\n✓')
 end
 end 
-end,{chat_id_=msg.chat_id_,id_=msg.id_,Group=MsgText[2],name_gp=name_gp})
+end,{chat_id_=msg.chat_id_,id_=msg.id_,Group=idgrup,name_gp=name_gp})
 return false
 end
 
@@ -5632,6 +5641,8 @@ Boss = {
 '^(تنزيل مدير)$',
 '^(تفعيل)$',
 '^(تعطيل)$',
+'^(تعطيل) [-]100(%d+)$',
+
 "^(مسح كلايش التعليمات)$",
 
 
