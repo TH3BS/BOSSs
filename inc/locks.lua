@@ -1213,10 +1213,11 @@ end,{msg=msg})
 end
 
 function unmute_photo(msg)
+if not msg.Admin then return "📡*¦* هذا الامر يخص الادمنيه فقط  🚶" end
+
 GetUserID(msg.sender_user_id_,function(arg,data)
 msg = arg.msg 
 local NameUser   = Hyper_Link_Name(data)
-if not msg.Admin then return "📡*¦* هذا الامر يخص الادمنيه فقط  🚶" end
 if not redis:get(boss.."mute_photo"..msg.chat_id_)then
 return sendMsg(msg.chat_id_,msg.id_,"🔓¦ تم بالتأكيد فتح الصور    \n📮¦ بواسطه ⋙「 "..NameUser.." 」 \n✓" ) 
 else 
