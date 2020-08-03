@@ -255,6 +255,40 @@ else
 msg.GroupActive = false
 end
 
+if msg.GroupActive then 
+
+if (msg.content_.ID == "MessagePhoto" 
+or msg.content_.ID == "MessageSticker" 
+or msg.content_.ID == "MessageVoice" 
+or msg.content_.ID == "MessageAudio" 
+or msg.content_.ID == "MessageVideo" 
+or msg.content_.ID == "MessageAnimation" 
+or msg.content_.ID == "MessageUnsupported") 
+and redis:get(boss.."lock_cleaner"..msg.chat_id_) then
+print("Clener >>> ")
+redis:sadd(boss..":IdsMsgsCleaner:"..msg.chat_id_,msg.id_)
+redis:setex(boss..":SetTimerCleaner:"..msg.chat_id_..msg.id_,21600,true)  
+end
+
+
+
+print(boss..":IdsMsgsCleaner:"..msg.chat_id_)
+local Cleaner = redis:smembers(boss..":IdsMsgsCleaner:"..msg.chat_id_)
+for k,v in pairs(Cleaner) do
+if not redis:get(boss..":SetTimerCleaner:"..msg.chat_id_..v) then
+Del_msg(msg.chat_id_,v)
+redis:srem(boss..":IdsMsgsCleaner:"..msg.chat_id_,v)
+print("MSG DELET CLEANER : "..v)
+else
+print("MSG List CLEANER : "..v.." : Lodding ...")
+end
+end
+
+
+
+
+end
+
 if msg.content_.ID == "MessageChatDeleteMember" then 
 if msg.GroupActive and redis:get(boss..'mute_tgservice'..msg.chat_id_) then
 Del_msg(msg.chat_id_,msg.id_)

@@ -39,6 +39,33 @@ end
 end,{msg=msg})
 end 
 
+---------------Lock ------------------- 
+function unlock_rdodSource(msg)
+    if not msg.Director then return "📛*¦* هذا الامر يخص {المطور,المنشئ,المدير} فقط  \n🚶" end
+    GetUserID(msg.sender_user_id_,function(arg,data)
+msg = arg.msg 
+local NameUser   = Hyper_Link_Name(data)
+if redis:get(boss.."lock_rdodSource"..msg.chat_id_) then 
+return sendMsg(msg.chat_id_,msg.id_,"🔓¦ تم بالتأكيد تفعيل ردود السورس    \n📮¦ بواسطه ⋙「 "..NameUser.." 」 \n✓" ) 
+else redis:set(boss.."lock_rdodSource"..msg.chat_id_,true)
+return sendMsg(msg.chat_id_,msg.id_,"🔓¦ تم تفعيل ردود السورس بنجاح   \n📮¦ بواسطه ⋙「 "..NameUser.." 」 \n✓" ) 
+end 
+end,{msg=msg})
+end
+
+function lock_rdodSource(msg)
+    if not msg.Director then return "📛*¦* هذا الامر يخص {المطور,المنشئ,المدير} فقط  \n🚶" end
+    GetUserID(msg.sender_user_id_,function(arg,data)
+msg = arg.msg 
+local NameUser   = Hyper_Link_Name(data)
+if not redis:get(boss.."lock_rdodSource"..msg.chat_id_) then 
+return sendMsg(msg.chat_id_,msg.id_,"🔒¦ تم بالتأكيد تعطيل  ردود السورس    \n📮¦ بواسطه ⋙「 "..NameUser.." 」 \n✓" ) 
+else redis:del(boss.."lock_rdodSource"..msg.chat_id_) 
+return sendMsg(msg.chat_id_,msg.id_,"🔒¦ تم تعطيل ردود السورس بنجاح   \n📮¦ بواسطه ⋙「 "..NameUser.." 」 \n✓" ) 
+end
+end,{msg=msg})
+end 
+
 ---------------Lock check -------------------
 function lock_check(msg)
 if not msg.Admin then return "📡*¦* هذا الامر يخص الادمنيه فقط  🚶" end
@@ -62,6 +89,33 @@ if redis:get(boss.."lock_check"..msg.chat_id_) then
 return sendMsg(msg.chat_id_,msg.id_,"🔒¦ تم بالتأكيد تفعيل التحقق    \n📮¦ بواسطه ⋙「 "..NameUser.." 」 \n✓" )        else
 redis:set(boss.."lock_check"..msg.chat_id_,true)
 return sendMsg(msg.chat_id_,msg.id_,"🔒¦ تم تفعيل التحقق بنجاح   \n📮¦ بواسطه ⋙「 "..NameUser.." 」 \n✓" )
+end
+end,{msg=msg})
+end
+
+---------------Lock check -------------------
+function lock_cleaner(msg)
+    if not msg.Director then return "📛*¦* هذا الامر يخص {المطور,المنشئ,المدير} فقط  \n🚶" end
+GetUserID(msg.sender_user_id_,function(arg,data)
+msg = arg.msg 
+local NameUser   = Hyper_Link_Name(data)
+if not redis:get(boss.."lock_cleaner"..msg.chat_id_) then
+return sendMsg(msg.chat_id_,msg.id_,"🔓¦ تم بالتأكيد تعطيل التنظيف التلقائي    \n📮¦ بواسطه ⋙「 "..NameUser.." 」 \n✓" )        else 
+redis:del(boss.."lock_cleaner"..msg.chat_id_)
+return sendMsg(msg.chat_id_,msg.id_,"🔓¦ تم تعطيل التنظيف التلقائي بنجاح   \n📮¦ بواسطه ⋙「 "..NameUser.." 」 \n✓" ) 
+end
+end,{msg=msg})
+end
+
+function unlock_cleaner(msg)
+    if not msg.Director then return "📛*¦* هذا الامر يخص {المطور,المنشئ,المدير} فقط  \n🚶" end
+GetUserID(msg.sender_user_id_,function(arg,data)
+msg = arg.msg 
+local NameUser   = Hyper_Link_Name(data)
+if redis:get(boss.."lock_cleaner"..msg.chat_id_) then
+return sendMsg(msg.chat_id_,msg.id_,"🔒¦ تم بالتأكيد تفعيل التنظيف التلقائي    \n📮¦ بواسطه ⋙「 "..NameUser.." 」 \n✓" )        else
+redis:set(boss.."lock_cleaner"..msg.chat_id_,true)
+return sendMsg(msg.chat_id_,msg.id_,"🔒¦ تم تفعيل التنظيف التلقائي بنجاح   \n📮¦ بواسطه ⋙「 "..NameUser.." 」 \n✓" )
 end
 end,{msg=msg})
 end

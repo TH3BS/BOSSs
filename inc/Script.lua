@@ -2013,6 +2013,8 @@ if MsgText[1] == "تفعيل الحظر" 	then return unlock_KickBan(msg) end
 if MsgText[1] == "تفعيل الرابط" 	then return unlock_linkk(msg) end 
 if MsgText[1] == "تفعيل تاك للكل" 	then return unlock_takkl(msg) end 
 if MsgText[1] == "تفعيل التحقق" 		then return unlock_check(msg) end 
+if MsgText[1] == "تفعيل التنظيف التلقائي" 		then return unlock_cleaner(msg) end 
+if MsgText[1] == "تفعيل ردود السورس" 		then return unlock_rdodSource(msg) end 
 
 
 if MsgText[1] == "تعطيل الردود" 	then return lock_replay(msg) end
@@ -2026,6 +2028,8 @@ if MsgText[1] == "تعطيل الحظر" 	then return lock_KickBan(msg) end
 if MsgText[1] == "تعطيل الرابط" 	then return lock_linkk(msg) end 
 if MsgText[1] == "تعطيل تاك للكل" 	then return lock_takkl(msg) end 
 if MsgText[1] == "تعطيل التحقق" 		then return lock_check(msg) end 
+if MsgText[1] == "تعطيل التنظيف التلقائي" 		then return lock_cleaner(msg) end 
+if MsgText[1] == "تعطيل ردود السورس" 		then return lock_rdodSource(msg) end 
 
 
 if MsgText[1] == "ضع الترحيب" then 
@@ -4616,6 +4620,37 @@ return false
 end
 
 if msg.edited and not msg.SuperCreator and redis:get(boss.."antiedit"..msg.chat_id_) then 
+GetUserID(msg.sender_user_id_,function(arg,data)
+msg = arg.msg 
+local usersmnc   = ""
+local NameUser   = Hyper_Link_Name(data)
+if data.username_  then uuseri = "\n🔬¦ معرفه : @["..data.username_.."]"  else uuseri = "" end
+local monsha = redis:smembers(boss..':MONSHA_Group:'..msg.chat_id_)
+Rwers = ""
+if msg.content_.ID == "MessagePhoto" then
+Rwers = "صوره"
+elseif msg.content_.ID == "MessageSticker"  then
+Rwers = "ملصق"
+elseif msg.content_.ID == "MessageVoice"  then
+Rwers = "بصمه"
+elseif msg.content_.ID == "MessageAudio"  then
+Rwers = "صوت"
+elseif msg.content_.ID == "MessageVideo"  then
+Rwers = "فيديو"
+elseif msg.content_.ID == "MessageAnimation"  then
+Rwers = "متحركه"
+else
+Rwers = "نصي"
+end
+if #monsha ~= 0 then 
+for k,v in pairs(monsha) do
+local info = redis:hgetall(boss..'username:'..v) if info and info.username and info.username:match("@[%a%d_]+") then usersmnc = usersmnc..info.username.." - " end
+sendMsg(v,0,"📇¦ هناك شخص قام بالتعديل \n👲🏼¦ الاسم : ⋙「 "..NameUser.." 」 "..uuseri.."\n🀄️¦ الايدي : `"..msg.sender_user_id_.."`\n📬¦ رتبته : "..Getrtba(msg.sender_user_id_,msg.chat_id_).."\n🔌¦ نوع التعديل : "..Rwers.."\n📱¦ المجموعة : "..Flter_Markdown((redis:get(boss..'group:name'..msg.chat_id_) or '')).."\n🔅¦ الرابط : "..redis:get(boss..'linkGroup'..msg.chat_id_).." \n🚸" )
+end
+end
+return sendMsg(msg.chat_id_,msg.id_,"📢¦ نداء لمنشئيين : ["..usersmnc.."] \n📇¦ هناك شخص قام بالتعديل"..uuseri.."\n👲🏼¦ الاسم : ⋙「 "..NameUser.." 」 \n🀄️¦ الايدي : `"..msg.sender_user_id_.."`\n📬¦ رتبته : "..Getrtba(msg.sender_user_id_,msg.chat_id_).."\n🔌¦ نوع التعديل : "..Rwers.."\n🚸" )   
+
+end,{msg=msg})
 Del_msg(msg.chat_id_,msg.id_)
 end
 
@@ -5234,8 +5269,9 @@ return false
 end
 
 end,{msg=msg})
+end
 
-if not Replay then
+if msg.text and redis:get(boss.."lock_rdodSource"..msg.chat_id_) then
 
 --================================{{  Reply Bot  }} ===================================
 
@@ -5463,11 +5499,6 @@ return sendMsg(msg.chat_id_,msg.id_,"فوك مامصعدك ادمن ؟؟ انت�
 else 
 return sendMsg(msg.chat_id_,msg.id_,"انجب انته لاتندفر 😏")
 end 
-end 
-
-
-
-
 end 
 
 
@@ -5772,6 +5803,12 @@ Boss = {
 "^(اذاعه بالتثبيت 📬)$",
 "^(نسخه احتياطيه للمجموعات)$",
 "^(رفع نسخه الاحتياطيه)$", 
+
+"^(تفعيل ردود السورس)$", 
+"^(تعطيل ردود السورس)$", 
+"^(تفعيل التنظيف التلقائي)$", 
+"^(تعطيل التنظيف التلقائي)$", 
+
 "^(تفعيل الاشتراك الاجباري)$", 
 "^(تعطيل الاشتراك الاجباري)$", 
 "^(تغيير الاشتراك الاجباري)$", 
