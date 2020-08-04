@@ -736,12 +736,12 @@ end
 
 function KlmatMmno3(text)
 resq = false
-if not redis:get("UpdatWordsFshar") then
+if not Fshar_Word or not redis:get("UpdatWordsFshar") then
 local Fshar_Word , res = https.request('https://api.th3boss.com/Words_Fshars.txt')
-if res ~= 200 then ArrayFshar = "" else ArrayFshar = Fshar_Word end
+if res ~= 200 then Fshar_Word = "\n" end
 redis:setex("UpdatWordsFshar",3600,true)
 end
-for lines in ArrayFshar:gmatch('[^\r\n]+') do
+for lines in Fshar_Word:gmatch('[^\r\n]+') do
 if text:match('^('..lines..')$') or text:match(lines..' .*') or text:match('.* '..lines) then
 print("Word is Fshar")
 resq = true
@@ -749,6 +749,7 @@ end end
 print(resq)
 return resq
 end
+
 
 
 function Get_Ttl(msgs)
