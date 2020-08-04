@@ -95,13 +95,21 @@ end
 
 ---------------Lock check -------------------
 function lock_cleaner(msg)
-    if not msg.Director then return "📛*¦* هذا الامر يخص {المطور,المنشئ,المدير} فقط  \n🚶" end
+if not msg.Director then return "📛*¦* هذا الامر يخص {المطور,المنشئ,المدير} فقط  \n🚶" end
 GetUserID(msg.sender_user_id_,function(arg,data)
 msg = arg.msg 
 local NameUser   = Hyper_Link_Name(data)
 if not redis:get(boss.."lock_cleaner"..msg.chat_id_) then
-return sendMsg(msg.chat_id_,msg.id_,"🔓¦ تم بالتأكيد تعطيل التنظيف التلقائي    \n📮¦ بواسطه ⋙「 "..NameUser.." 」 \n✓" )        else 
+return sendMsg(msg.chat_id_,msg.id_,"🔓¦ تم بالتأكيد تعطيل التنظيف التلقائي    \n📮¦ بواسطه ⋙「 "..NameUser.." 」 \n✓" )
+else 
+                
 redis:del(boss.."lock_cleaner"..msg.chat_id_)
+local Cleaner = redis:smembers(boss..":IdsMsgsCleaner:"..msg.chat_id_)
+for k,v in pairs(Cleaner) do
+redis:del(boss..":SetTimerCleaner:"..msg.chat_id_..v) 
+Del_msg(msg.chat_id_,v)
+end
+redis:del(boss..":IdsMsgsCleaner:"..msg.chat_id_)
 return sendMsg(msg.chat_id_,msg.id_,"🔓¦ تم تعطيل التنظيف التلقائي بنجاح   \n📮¦ بواسطه ⋙「 "..NameUser.." 」 \n✓" ) 
 end
 end,{msg=msg})
