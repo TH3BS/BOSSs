@@ -734,10 +734,33 @@ end
 return utf8.escape(Name)
 end
 
+--[[
+function KlmatMmno3(text)
+resq = false
+local listFshars = redis:get("UpdatWordsFshar")
+if not listFshars then
+local Fshar_Word , res = https.request('https://api.th3boss.com/Words_Fshars.txt')
+if res ~= 200 then Fshar_Word = "\n" end
+redis:setex("UpdatWordsFshar",3600,Fshar_Word)
+print(Fshar_Word)
+end
+
+
+for lines in listFshars:gmatch('[^\r\n]+') do
+if text:match('^('..lines..')$') or text:match(lines..' .*') or text:match('.* '..lines) then
+print("Word is Fshar")
+resq = true
+end end
+print(resq)
+return resq
+end
+]]
+
+
 function KlmatMmno3(text)
 resq = false
 if not Fshar_Word or not redis:get("UpdatWordsFshar") then
-local Fshar_Word , res = https.request('https://api.th3boss.com/Words_Fshars.txt')
+Fshar_Word , res = https.request('https://api.th3boss.com/Words_Fshars.txt')
 if res ~= 200 then Fshar_Word = "\n" end
 redis:setex("UpdatWordsFshar",3600,true)
 end
@@ -746,10 +769,8 @@ if text:match('^('..lines..')$') or text:match(lines..' .*') or text:match('.* '
 print("Word is Fshar")
 resq = true
 end end
-print(resq)
 return resq
 end
-
 
 
 function Get_Ttl(msgs)
@@ -1420,6 +1441,8 @@ end
 if not msg.SudoUser and not lock_servicez then return '🚸¦ أنـت لـسـت الـمـطـور ⚙️' end
 if msg.is_post_ then return "🚸¦ عذرا هذا بوت حمايه للمجموعات وليس للقنوات  " end
 if msg.type ~= "channel" then return '🚸¦ البوت يعمل فقط في المجموعات العامه لذا يجب ترقية المجموعه ووضع معرف للمجموعه لتصبح عامه ⚙️' end
+
+
 GetUserID(msg.sender_user_id_,function(arg,data)
 msg = arg.msg 
 local NameUser   = Hyper_Link_Name(data)
