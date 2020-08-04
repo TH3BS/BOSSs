@@ -2012,7 +2012,7 @@ local eueuf = "\n\n*⚒¦*` اعدادات اخرى : `"
 .."\n*🎫¦* التاك للكل » "..(redis:get(boss..'lock_takkl'..msg.chat_id_) or 'false')
 .."\n*🎫¦* الايدي بالصوره » "..(redis:get(boss..'idphoto'..msg.chat_id_) or 'false')
 .."\n*🎫¦* التحقق » "..(redis:get(boss.."lock_check"..msg.chat_id_) or 'false')
-.."\n*🎫¦* تنظيف التلقائي » "..(redis:get(boss.."lock_cleaner"..msg.chat_id_) or 'false')
+.."\n*🎫¦* التنظيف التلقائي » "..(redis:get(boss.."lock_cleaner"..msg.chat_id_) or 'false')
 .."\n*🎫¦* ردود السورس » "..(redis:get(boss.."lock_rdodSource"..msg.chat_id_) or 'false')
 list_settings = list_settings:gsub('true', '{ مقفول }')
 list_settings = list_settings:gsub('false', '{ مفتوح }')
