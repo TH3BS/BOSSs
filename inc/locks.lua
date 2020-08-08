@@ -11,7 +11,6 @@
 ]]
 
 
-
 ---------------Lock ------------------- 
 function unlock_KickBan(msg)
 if not msg.Creator then return "📛*¦* هذا الامر يخص {المطور,المنشئ} فقط  \n🚶" end
